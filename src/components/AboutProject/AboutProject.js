@@ -1,5 +1,4 @@
 import "./AboutProject.css";
-import "../SectionHeader/SectionHeader";
 import { SectionHeader } from "../SectionHeader/SectionHeader";
 
 export function AboutProject() {
