@@ -1,0 +1,67 @@
+.portfolio {
+  background-color: #fff;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 70px 125px;
+}
+
+.portfolio__wrapper {
+  display: flex;
+}
+
+.portfolio__title {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 20px;
+  color: #a0a0a0;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+}
+
+.portfolio__list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.portfolio__list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.portfolio__list-item:last-of-type {
+  border-bottom: none;
+}
+
+.portfolio__link {
+  text-decoration: none;
+  color: #000;
+}
+
+.portfolio__link-text {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 50px;
+  letter-spacing: -0.04em;
+}
+
+.portfolio__link-icon {
+  background-image: url("../../images/arrow-portfolio.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  width: 30px;
+  height: 21px;
+}
