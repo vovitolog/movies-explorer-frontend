@@ -1,22 +1,19 @@
 import "./App.css";
-import { Header } from "../Header/Header";
-import { Promo } from "../Promo/Promo";
-import { AboutProject } from "../AboutProject/AboutProject";
-import { Techs } from "../Techs/Techs";
-import { AboutMe } from "../AboutMe/AboutMe";
-import { Portfolio } from "../Portfolio/Portfolio";
-import { Footer } from "../Footer/Footer";
+import { Switch, Route } from "react-router-dom";
+import { Movies } from "../Movies/Movies";
+import { Main } from "../Main/Main";
 
 function App() {
   return (
     <div className="App">
-      <Header />
-      <Promo />
-      <AboutProject />
-      <Techs />
-      <AboutMe />
-      <Portfolio />
-      <Footer />
+      <Switch>
+        <Route exact path={"/"}>
+          <Main />
+        </Route>
+        <Route exact path={"/movies"}>
+          <Movies />
+        </Route>
+      </Switch>
     </div>
   );
 }
