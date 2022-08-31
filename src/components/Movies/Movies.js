@@ -3,6 +3,7 @@ import { Header } from "../Header/Header";
 import { SearchForm } from "../SearchForm/SearchForm";
 import { Preloader } from "../Preloader/Preloader";
 import { MoviesCard } from "../MoviesCard/MoviesCard";
+import { MoviesCardList } from "../MoviesCardList/MoviesCardList";
 import "./Movies.css";
 
 export function Movies() {
@@ -11,13 +12,13 @@ export function Movies() {
       <Header />
       <main className="movies">
         <SearchForm />
+        <MoviesCardList />
         <button
           type="button"
           className="movies__button movies__button_on transition-button"
         >
           Еще
         </button>
-        <MoviesCard />
       </main>
       <Footer />
     </>
