@@ -2,6 +2,7 @@ import { Footer } from "../Footer/Footer";
 import { Header } from "../Header/Header";
 import { SearchForm } from "../SearchForm/SearchForm";
 import { Preloader } from "../Preloader/Preloader";
+import { MoviesCard } from "../MoviesCard/MoviesCard";
 import "./Movies.css";
 
 export function Movies() {
@@ -16,7 +17,7 @@ export function Movies() {
         >
           Еще
         </button>
-
+        <MoviesCard />
       </main>
       <Footer />
     </>
