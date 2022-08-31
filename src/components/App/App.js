@@ -1,5 +1,6 @@
 import "./App.css";
 import { Switch, Route } from "react-router-dom";
+import {SavedMovies} from "../SavedMovies/SavedMovies"
 import { Movies } from "../Movies/Movies";
 import { Main } from "../Main/Main";
 import { Register } from "../Register/Register";
@@ -16,6 +17,9 @@ function App() {
         </Route>
         <Route exact path={"/movies"}>
           <Movies />
+        </Route>
+        <Route exact path={"/saved-movies"}>
+          <SavedMovies />
         </Route>
         <Route exact path={"/signup"}>
           <Register />
