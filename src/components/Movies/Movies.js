@@ -1,6 +1,7 @@
 import { Footer } from "../Footer/Footer";
 import { Header } from "../Header/Header";
-import {SearchForm} from "../SearchForm/SearchForm"
+import { SearchForm } from "../SearchForm/SearchForm";
+import { Preloader } from "../Preloader/Preloader";
 import "./Movies.css";
 
 export function Movies() {
@@ -8,7 +9,14 @@ export function Movies() {
     <>
       <Header />
       <main className="movies">
-      <SearchForm />
+        <SearchForm />
+        <button
+          type="button"
+          className="movies__button movies__button_on transition-button"
+        >
+          Еще
+        </button>
+
       </main>
       <Footer />
     </>
