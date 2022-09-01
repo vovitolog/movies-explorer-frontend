@@ -1,8 +1,15 @@
 .navigation-tab {
   display: flex;
   gap: 10px;
-
   justify-content: center;
+  margin-bottom: 30px;
+}
+
+@media screen and (max-width: 600px) {
+  .navigation-tab {
+    margin-bottom: 17px;
+    gap: 6px;
+  }
 }
 
 .navigation-tab__button {
@@ -16,6 +23,14 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
+}
+
+@media screen and (max-width: 600px) {
+  .navigation-tab__button {
+    font-size: 10px;
+    height: 26px;
+    width: 82px;
+  }
 }
 
 .navigation-tab__link {
