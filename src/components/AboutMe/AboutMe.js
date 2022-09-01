@@ -5,7 +5,7 @@ import photo from "../../images/student.jpg";
 
 export function AboutMe() {
   return (
-    <section className="about-me">
+    <section className="about-me id" id="about-me">
       <SectionHeader title="Студент" />
       <div className="about-me__wrapper">
         <div className="about-me__profile">

@@ -3,7 +3,7 @@ import { SectionHeader } from "../SectionHeader/SectionHeader";
 
 export function Techs() {
   return (
-    <section className="techs">
+    <section className="techs" id="techs">
       <SectionHeader title="Технологии" />
       <h1 className="techs__title">7 технологий</h1>
       <p className="techs__subtitle">
