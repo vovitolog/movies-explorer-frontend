@@ -17,16 +17,14 @@ export function AboutMe() {
             Решил перейти в сферу разработки так как хочу создавать полезные и
             удобные для людей продукты. Фронтенд привлекает тем, что сразу виден
             результат твоей работы. Ранее имел опыт создания сайтов на
-            конструкторах, но всегда хотелось иметь полный контроль над
-            написанием кода. Последний год активно развиваюсь как
-            frontend-разработчик. Увлекаюсь бегом, люблю открывать новые места
-            во время пробежек в путешествиях.
+            конструкторах, но всегда хотел иметь полный контроль над
+            написанием кода. Увлекаюсь бегом, люблю путешествовать.
           </p>
           <ul className="about-me__profile-links">
             <li>
               <Link
                 to={{ pathname: "https://github.com/vovitolog" }}
-                className="header__button"
+                className="about-me__profile-link transition-link"
                 target="_blank"
               >
                 Github
@@ -35,7 +33,7 @@ export function AboutMe() {
             <li>
               <Link
                 to={{ pathname: "https://career.habr.com/vovitolog" }}
-                className="header__button"
+                className="about-me__profile-link transition-link"
                 target="_blank"
               >
                 Хабр карьера
