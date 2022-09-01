@@ -26,8 +26,8 @@ export function AboutProject() {
         </li>
       </ul>
       <div className="about-project__length">
-        <p className="about-project__length-backend">1 неделя</p>
-        <p className="about-project__length-frontend">4 недели</p>
+        <p className="about-project__length-cell about-project__length-cell_backend">1 неделя</p>
+        <p className="about-project__length-cell about-project__length-cell_frontend">4 недели</p>
         <p className="about-project__length-description">Back-end</p>
         <p className="about-project__length-description">Front-end</p>
       </div>
