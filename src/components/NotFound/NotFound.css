@@ -14,9 +14,27 @@
   line-height: 169px;
 }
 
+@media screen and (max-width: 425px) {
+  .not-fountd__title {
+    font-size: 80px;
+    line-height: 97px;
+  }
+}
+
 .not-found__subtitle {
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 17px;
   padding: 5px 0 0;
   margin: 0;
+}
+
+@media screen and (max-width: 425px) {
+  .not-found__subtitle {
+    font-size: 12px;
+    line-height: 15px;
+    padding-top: 10px;
+  }
 }
 
 .not-found__button {
@@ -28,4 +46,12 @@
   line-height: 17px;
   border: none;
   padding-top: 184px;
+}
+
+@media screen and (max-width: 425px) {
+  .not-found__button {
+    font-size: 12px;
+    line-height: 15px;
+    padding-top: 284px;
+  }
 }

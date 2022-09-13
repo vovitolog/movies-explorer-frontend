@@ -1,10 +1,23 @@
 .login {
   display: flex;
   flex-direction: column;
-  align-items: center;
   margin: 70px auto;
   max-width: 396px;
   align-items: flex-start;
+}
+
+@media screen and (max-width: 768px) {
+  .login {
+    margin: 232px auto;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .login {
+    margin: 56px auto 30px;
+    max-width: 260px;
+    align-items: center;
+  }
 }
 
 .login__form {
@@ -19,6 +32,12 @@
   font-size: 24px;
   line-height: 29px;
   text-align: left;
+}
+
+@media screen and (max-width: 425px) {
+  .login__title {
+    padding: 50px 0 80px;
+  }
 }
 
 .login__label {
@@ -77,6 +96,15 @@
   text-align: center;
 }
 
+@media screen and (max-width: 425px) {
+  .login__button {
+    width: 260px;
+    font-size: 12px;
+    line-height: 15px;
+    margin-bottom: 14px;
+  }
+}
+
 .login__redirect {
   display: flex;
   gap: 6px;
@@ -91,6 +119,13 @@
   color: #a0a0a0;
 }
 
+@media screen and (max-width: 425px) {
+  .login__redirect-span {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
+
 .login__redirect-link {
   font-weight: 400;
   font-size: 14px;
@@ -98,4 +133,11 @@
   text-align: center;
   color: #000000;
   text-decoration: none;
+}
+
+@media screen and (max-width: 425px) {
+  .login__redirect-link {
+    font-size: 12px;
+    line-height: 15px;
+  }
 }
