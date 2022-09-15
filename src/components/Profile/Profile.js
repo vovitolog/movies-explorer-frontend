@@ -7,7 +7,7 @@ export function Profile() {
     <>
       <Header />
       <main className="profile">
-        <h1 className="profile__title">Привет, Виталий!</h1>
+        <h1 className="profile__title">Привет, Владимир!</h1>
         <form className="profile__form">
           <div className="profile__input-wrapper">
             <label className="profile__input-label">
@@ -15,7 +15,7 @@ export function Profile() {
               <input
                 className="profile__input"
                 id="userName"
-                placeholder="Виталий"
+                placeholder="Владимир"
                 name="userName"
                 minLength="2"
                 maxLength="30"
