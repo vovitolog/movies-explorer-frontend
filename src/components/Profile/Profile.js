@@ -1,11 +1,10 @@
-import { Link } from "react-router-dom";
-import { Header } from "../Header/Header";
+import { Navigation } from "../Navigation/Navigation";
 import "./Profile.css";
 
 export function Profile() {
   return (
     <>
-      <Header />
+      <Navigation />
       <main className="profile">
         <h1 className="profile__title">Привет, Владимир!</h1>
         <form className="profile__form">

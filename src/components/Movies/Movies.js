@@ -1,15 +1,15 @@
 import { Footer } from "../Footer/Footer";
-import { Header } from "../Header/Header";
 import { SearchForm } from "../SearchForm/SearchForm";
 import { Preloader } from "../Preloader/Preloader";
 import { MoviesCard } from "../MoviesCard/MoviesCard";
 import { MoviesCardList } from "../MoviesCardList/MoviesCardList";
+import {Navigation} from "../Navigation/Navigation";
 import "./Movies.css";
 
 export function Movies() {
   return (
     <>
-      <Header />
+      <Navigation/>
       <main className="movies">
         <SearchForm />
         <MoviesCardList />

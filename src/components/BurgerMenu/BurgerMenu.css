@@ -1,0 +1,113 @@
+.burger-button {
+  display: none;
+  background-image: url("../../images/burger-button.svg");
+  height: 44px;
+  width: 44px;
+  border: none;
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .burger-button {
+    display: block;
+  }
+}
+
+.burger-menu {
+  display: flex;
+  flex: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 0.5s, opacity 0.5s linear;
+}
+
+.burger-menu_opened {
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0s;
+  z-index: 1;
+}
+
+.burger-menu__wrapper {
+  width: 70%;
+  height: 100%;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 159px 0 90px;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 425px) {
+  .burger-menu__wrapper {
+    width: 100%;
+    padding: 144px 0 46px;
+  }
+}
+
+.burger-menu__close-button {
+  background-color: transparent;
+  padding: 0;
+  border: none;
+  width: 22px;
+  height: 22px;
+  background-image: url(../../images/close_burger-button.svg);
+  background-size: cover;
+  position: absolute;
+  right: 30px;
+  top: 30px;
+  color: #000;
+}
+
+.burger-menu__links-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.burger-menu__link {
+  text-decoration: none;
+  color: #000;
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 500;
+  margin-bottom: 28px;
+}
+
+.burger-menu__link:hover {
+  border-bottom: 2px solid #000;
+}
+.burger-menu__link:active {
+  border-bottom: 2px solid #000;
+}
+
+.burger-menu__profile-button {
+  background-color: #f9f9f9;
+  border: none;
+  border-radius: 20px;
+  color: #000;
+  height: 32px;
+  width: 100px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
