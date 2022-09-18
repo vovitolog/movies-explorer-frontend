@@ -10,6 +10,18 @@
   margin: 0;
 }
 
+@media screen and (max-width: 768px) {
+  .movie-card {
+    width: 339px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .movie-card {
+    width: 300px;
+  }
+}
+
 .movie-card__wrapper {
   box-sizing: border-box;
   display: flex;
@@ -63,3 +75,16 @@
   width: 364px;
   height: 203px;
 }
+
+@media screen and (max-width: 768px) {
+  .movie-card__image {
+    width: 339px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .movie-card__image {
+    width: 300px;
+  }
+}
+

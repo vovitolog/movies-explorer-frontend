@@ -40,7 +40,7 @@ export function Register() {
           id="userPassword"
           required
         ></input>
-        <span className="register__input-error register__input-error_active">
+        <span className="register__input-error">
           Что-то пошло не так...
         </span>
         <button className="register__button transition-button" type="submit">

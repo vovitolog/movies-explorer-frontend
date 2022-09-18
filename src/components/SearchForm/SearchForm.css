@@ -6,6 +6,20 @@
   border-bottom: 1px solid #e8e8e8;
 }
 
+
+@media screen and (max-width: 768px) {
+  .search-form {
+    padding: 0 0 109px;
+
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .search-form {
+    padding: 0 0 44px;
+  }
+}
+
 .search-form__form {
   display: flex;
   align-items: center;
@@ -14,16 +28,36 @@
   background-color: #f9f9f9;
 }
 
+@media screen and (max-width: 600px) {
+  .search-form__form {
+    flex-direction: column;
+    border-radius: 9px;
+    background-color: transparent;
+  }
+}
+
 .search-form__wrapper {
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: space-between;
-  padding: 19px 30px 19px 19px;
+  padding: 19px 19px;
+  border-radius: 9px;
   background-image: url(../../images/icon-search.svg);
   background-size: 22px 22px;
   background-repeat: no-repeat;
   background-position: 19px center;
+  background-color: #f9f9f9;
+}
+
+@media screen and (max-width: 600px) {
+  .search-form__wrapper {
+    padding: 0 19px 0;
+    box-sizing: border-box;
+    height: 72px;
+    background-image: none;
+    margin-bottom: 45px;
+  }
 }
 
 .search-form__input {
@@ -33,8 +67,15 @@
   min-height: 34px;
   font-size: 18px;
   box-sizing: border-box;
-  margin: 0 19px 0 44px;
+  margin: 0 0 0 44px;
   background-color: #f9f9f9;
+}
+
+@media screen and (max-width: 600px) {
+  .search-form__input {
+    font-size: 14px;
+    margin-left: 0;
+  }
 }
 
 .search-form__input::placeholder {
@@ -42,6 +83,13 @@
   font-size: 18px;
   line-height: 20px;
   font-weight: 400;
+}
+
+@media screen and (max-width: 600px) {
+  .search-form__input::placeholder {
+    font-size: 14px;
+    line-height: 20px;
+  }
 }
 
 input[type="search"]::-webkit-search-decoration,
@@ -52,23 +100,30 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 .search-form__button {
-  width: 34px;
+  min-width: 34px;
   height: 34px;
-  border: none;
+  background-color: #000;
+  border: 0;
+  border-radius: 50%;
   padding: 0;
-  background-image: url(../../images/arrow-search.svg);
-  background-size: 34px 34px;
+  background-image: url(../../images/search-input.svg);
   background-repeat: no-repeat;
   background-position-x: 50%;
   background-position-y: center;
-  background-color: transparent;
 }
 
 .search-form__switch {
   width: fit-content;
   height: 40px;
-  padding: 0 30px;
+  padding: 0 20px;
   border-left: 1px solid #cbcbcb;
+}
+
+@media screen and (max-width: 600px) {
+  .search-form__switch {
+    background-color: #fff;
+    border-left: none;
+  }
 }
 
 .search-form__switch-container {
