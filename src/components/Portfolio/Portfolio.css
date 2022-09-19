@@ -2,7 +2,13 @@
   background-color: #fff;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 70px 125px;
+  padding: 0 70px 120px;
+}
+
+@media screen and (max-width: 768px) {
+  .portfolio {
+    padding: 0 50px 90px;
+  }
 }
 
 @media screen and (max-width: 600px) {
@@ -36,9 +42,6 @@
 }
 
 .portfolio__list-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   border-bottom: 1px solid #e8e8e8;
 }
 
@@ -51,6 +54,9 @@
 }
 
 .portfolio__link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   text-decoration: none;
   color: #000;
 }

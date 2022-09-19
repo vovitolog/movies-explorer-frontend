@@ -8,7 +8,10 @@ export function MoviesCard() {
           <h2 className="movie-card__title">33 слова о дизайне</h2>
           <p className="movie-card__duration">1ч 47м</p>
         </div>
-        <button className="movie-card__favorite-button movie-card__favorite-button_pressed"></button>
+        <button
+          type="button"
+          className="movie-card__favorite-button movie-card__favorite-button_pressed"
+        ></button>
       </div>
       <img
         className="movie-card__image"

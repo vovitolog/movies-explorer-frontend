@@ -43,7 +43,10 @@ export function Profile() {
             Редактировать
           </button>
         </form>
-        <button className="profile__button-logout transition-button">
+        <button
+          type="button"
+          className="profile__button-logout transition-button"
+        >
           Выйти из аккаунта
         </button>
       </main>
