@@ -1,4 +1,5 @@
 import "./App.css";
+import { useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import {SavedMovies} from "../SavedMovies/SavedMovies"
 import { Movies } from "../Movies/Movies";
@@ -7,9 +8,17 @@ import { Register } from "../Register/Register";
 import { Login } from "../Login/Login";
 import { Profile } from "../Profile/Profile";
 import { NotFound } from "../NotFound/NotFound";
+import { mainApi } from "../../utils/MainApi";
+import { moviesApi } from "../../utils/MoviesApi";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+
+
 
 function App() {
+  const [currentUser, setCurrentUser] = useState({});
+
   return (
+    <CurrentUserContext.Provider value={currentUser}>
     <div className="App">
       <Switch>
         <Route exact path={"/"}>
@@ -35,6 +44,7 @@ function App() {
         </Route>
       </Switch>
     </div>
+    </CurrentUserContext.Provider>
   );
 }
 
