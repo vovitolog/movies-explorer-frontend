@@ -10,7 +10,6 @@ class MainApi {
     }
     return Promise.reject(`Ошибка: ${res.status}`);
   }
-
   register(data) {
     return fetch(`${this._url}/signup`, {
       method: "POST",
@@ -59,7 +58,6 @@ class MainApi {
         return res;
       });
   }
-
   getUserProfile(token) {
     return fetch(`${this._url}/users/me`, {
       method: "GET",
@@ -84,7 +82,6 @@ class MainApi {
       }),
     }).then(this._handleResponse);
   }
-
   createMovie(card) {
     return fetch(`${this._url}/movies`, {
       method: "POST",
@@ -104,14 +101,12 @@ class MainApi {
       }),
     }).then(this._handleResponse);
   }
-
   getMovies() {
     return fetch(`${this._url}/movies`, {
       method: "GET",
       headers: this._headers,
     }).then(this._handleResponse);
   }
-
   removeMovie(id) {
     return fetch(`${this._url}/movies/${id}`, {
       method: "DELETE",

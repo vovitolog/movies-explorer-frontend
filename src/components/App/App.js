@@ -1,6 +1,6 @@
 import "./App.css";
-import { useState } from "react";
-import { Switch, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Switch, Route, useHistory } from "react-router-dom";
 import { SavedMovies } from "../SavedMovies/SavedMovies";
 import { Movies } from "../Movies/Movies";
 import { Main } from "../Main/Main";
@@ -18,6 +18,7 @@ function App() {
     useState(false);
   const [userMessage, setUserMessage] = useState("");
   const [loggedIn, setIsLoggedIn] = useState(false);
+  const history = useHistory();
   const [loginError, setLoginError] = useState(false);
   const [loginErrorMessage, setLoginErrorMessage] = useState("");
 
@@ -56,6 +57,36 @@ function App() {
         console.log(err);
       });
   }
+
+  useEffect(() => {
+    if (loggedIn) {
+      Promise.all([
+        mainApi.getUserProfile(localStorage.getItem("jwt")),
+        mainApi.getMovies(),
+      ])
+        .then(([user, movies]) => {
+          setCurrentUser(user);
+          history.push("/movies");
+        })
+        .catch((err) => console.log(err));
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [history, loggedIn]);
+
+  useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+      mainApi
+        .checkTokenValidity(jwt)
+        .then((res) => {
+          if (res) {
+            setIsLoggedIn(true);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  }, []);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
