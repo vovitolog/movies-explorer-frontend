@@ -1,6 +1,7 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import { Switch, Route, useHistory } from "react-router-dom";
+import {ProtectedRoute} from "../ProtectedRoute/ProtectedRoute"
 import { SavedMovies } from "../SavedMovies/SavedMovies";
 import { Movies } from "../Movies/Movies";
 import { Main } from "../Main/Main";
@@ -107,9 +108,9 @@ function App() {
           <Route exact path={"/signin"}>
             <Login onLogin={handleLogin} />
           </Route>
-          <Route exact path={"/profile"}>
+          <ProtectedRoute exact path={"/profile"}>
             <Profile />
-          </Route>
+          </ProtectedRoute>
           <Route path="*">
             <NotFound />
           </Route>
