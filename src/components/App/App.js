@@ -1,7 +1,7 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import { Switch, Route, useHistory } from "react-router-dom";
-import {ProtectedRoute} from "../ProtectedRoute/ProtectedRoute"
+import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
 import { SavedMovies } from "../SavedMovies/SavedMovies";
 import { Movies } from "../Movies/Movies";
 import { Main } from "../Main/Main";
@@ -94,7 +94,7 @@ function App() {
       <div className="App">
         <Switch>
           <Route exact path={"/"}>
-            <Main />
+            <Main loggedIn={loggedIn} />
           </Route>
           <Route exact path={"/movies"}>
             <Movies />

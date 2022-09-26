@@ -6,10 +6,10 @@ import { AboutMe } from "../AboutMe/AboutMe";
 import { Portfolio } from "../Portfolio/Portfolio";
 import { Footer } from "../Footer/Footer";
 
-export function Main() {
+export function Main(props) {
   return (
     <>
-      <Header />
+      <Header loggedIn={props.loggedIn} />
       <main>
         <Promo />
         <AboutProject />
