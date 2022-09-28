@@ -22,6 +22,10 @@ function App() {
   const history = useHistory();
   const [loginError, setLoginError] = useState(false);
   const [loginErrorMessage, setLoginErrorMessage] = useState("");
+  const [profileUpdateMessage, setProfileUpdateMessage] = useState("");
+  const [profileErrorMessage, setProfileErrorMessage] = useState("");
+  const [isProfileUpdateSuccessful, setIsProfileUpdateSuccessful] =
+    useState(false);
 
   function handleRegister(signupData) {
     mainApi
@@ -89,6 +93,27 @@ function App() {
     }
   }, []);
 
+  function handleUpdateProfile(data) {
+    setProfileUpdateMessage("");
+    setProfileErrorMessage("");
+
+    mainApi
+      .updateProfile(data)
+      .then((res) => {
+        setIsProfileUpdateSuccessful(true);
+        setCurrentUser(res);
+        setProfileUpdateMessage("Данные успешно изменены");
+        setTimeout(() => setProfileUpdateMessage(""), 3000);
+      })
+      .catch((err) => {
+        setIsProfileUpdateSuccessful(false);
+
+        setProfileErrorMessage("Что-то пошло не так...");
+        setTimeout(() => setProfileErrorMessage(""), 3000);
+        console.log(err);
+      });
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="App">
@@ -108,7 +133,13 @@ function App() {
           <Route exact path={"/signin"}>
             <Login onLogin={handleLogin} />
           </Route>
-          <ProtectedRoute exact path={"/profile"}>
+          <ProtectedRoute exact path={"/profile"}
+                  component={Profile}
+                  loggedIn={loggedIn}
+                  onUpdateProfile={handleUpdateProfile}
+                  profileUpdateMessage={profileUpdateMessage}
+                  profileErrorMessage={profileErrorMessage}
+                  isProfileUpdateSuccessful={isProfileUpdateSuccessful}>
             <Profile />
           </ProtectedRoute>
           <Route path="*">
