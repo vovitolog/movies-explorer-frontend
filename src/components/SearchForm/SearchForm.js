@@ -1,6 +1,16 @@
 import "./SearchForm.css";
+import { useState } from 'react';
 
 export function SearchForm(props) {
+
+  const [searchWord, setSearchWord] = useState(props.previousSearchWord);
+
+  function handleSearch(event) {
+    event.preventDefault();
+
+    (props.onSearch(searchWord))
+  }
+
   return (
     <section className="search-form">
       <form className="search-form__form">
@@ -11,11 +21,13 @@ export function SearchForm(props) {
             name="searchInput"
             id="searchInput"
             placeholder="Фильм"
+            onChange={event => setSearchWord(event.target.value)}
             required
           />
           <button
             className="search-form__button transition-button"
             type="submit"
+            onClick={handleSearch}
           />
         </label>
         <div className="search-form__switch">

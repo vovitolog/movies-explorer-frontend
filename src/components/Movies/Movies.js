@@ -1,21 +1,28 @@
 import { Footer } from "../Footer/Footer";
 import { SearchForm } from "../SearchForm/SearchForm";
-import { Preloader } from "../Preloader/Preloader";
-import { MoviesCard } from "../MoviesCard/MoviesCard";
 import { MoviesCardList } from "../MoviesCardList/MoviesCardList";
-import {Navigation} from "../Navigation/Navigation";
+import { Header } from "../Header/Header";
 import "./Movies.css";
 
-export function Movies() {
-  return (
+export function Movies(props) {
+
+  console.log(props.onSearch)
+
+ return (
     <>
-      <Navigation/>
+      <Header loggedIn={props.loggedIn} />
       <main className="movies">
-        <SearchForm />
-        <MoviesCardList />
+        <SearchForm
+          onSearch={props.onSearch}
+          previousSearchWord={props.previousSearchWord}
+        />
+        <MoviesCardList movies={props.movies} savedMovies={props.savedMovies} />
         <button
           type="button"
-          className="movies__button movies__button_on transition-button"
+          className={`movies__button ${
+            props.moreResults ? "movies__button_on" : null
+          }`}
+          onClick={props.showMoreResults}
         >
           Еще
         </button>

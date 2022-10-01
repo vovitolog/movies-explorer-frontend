@@ -1,16 +1,30 @@
 import "./MoviesCardList.css";
 import { MoviesCard } from "../MoviesCard/MoviesCard";
 
-export function MoviesCardList() {
+export function MoviesCardList(props) {
+  const movies = props.movies;
+  console.log(movies);
+
+  const calcDuration = (time) => {
+    const hours = Math.floor(time / 60);
+    const minutes = time % 60;
+    return hours > 0 ? `${hours}ч ${minutes}м` : `${minutes}м`;
+  };
+
   return (
     <section className="movies-list">
       <ul className="movies-list__cards">
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
+        {movies.map((movie) => {
+          return (
+            <MoviesCard
+              key={movie.id}
+              movieCard={movie}
+              nameRU={movie.nameRU}
+              duration={calcDuration(movie.duration)}
+              image={`https://api.nomoreparties.co/${movie.image.url}`}
+            />
+          );
+        })}
       </ul>
     </section>
   );

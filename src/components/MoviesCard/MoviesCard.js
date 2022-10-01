@@ -1,12 +1,13 @@
 import "./MoviesCard.css";
 
-export function MoviesCard() {
+export function MoviesCard(props) {
+
   return (
     <li className="movie-card">
       <div className="movie-card__wrapper">
         <div className="movie-card__description">
-          <h2 className="movie-card__title">33 слова о дизайне</h2>
-          <p className="movie-card__duration">1ч 47м</p>
+          <h2 className="movie-card__title">{props.nameRU}</h2>
+          <p className="movie-card__duration">{props.duration}</p>
         </div>
         <button
           type="button"
@@ -15,7 +16,7 @@ export function MoviesCard() {
       </div>
       <img
         className="movie-card__image"
-        src="https://f.bangbangeducation.ru/course/course-cover/111/da91b00b-ea93-11e9-89b4-0242ac18000a.png"
+        src={props.image}
         alt="Обложка фильма"
       ></img>
     </li>

@@ -27,6 +27,11 @@ function App() {
   const [isProfileUpdateSuccessful, setIsProfileUpdateSuccessful] =
     useState(false);
 
+  const [resultMovies, setResultMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([]);
+
+  const [previousSearchWord, setPreviousSearchWord] = useState("");
+
   function handleRegister(signupData) {
     mainApi
       .register(signupData)
@@ -71,13 +76,15 @@ function App() {
       ])
         .then(([user, movies]) => {
           setCurrentUser(user);
+          const userMovies = movies.filter((movie) => movie.owner === user._id);
+          localStorage.setItem("savedMovies", JSON.stringify(userMovies));
           history.push("/movies");
         })
         .catch((err) => console.log(err));
     } else {
       setIsLoggedIn(false);
     }
-  }, [history, loggedIn]);
+  }, [loggedIn]);
 
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");
@@ -114,6 +121,56 @@ function App() {
       });
   }
 
+  const moviesRender = (movies, itemsToShow) => {
+    if (movies) {
+      if (movies.length > itemsToShow) {
+        setResultMovies(movies.slice(0, 12));
+      } else {
+        setResultMovies(movies);
+      }
+    }
+  };
+
+  function handleMoviesSearch(searchParams) {
+    localStorage.setItem("searchWord", JSON.stringify(searchParams));
+
+    let filterResults;
+    if (!localStorage.movies) {
+      moviesApi
+        .getMovies()
+        .then((res) => {
+          console.log(res);
+          localStorage.setItem("movies", JSON.stringify(res));
+          filterResults = res.filter((movie) => {
+            return movie.nameRU
+              .toLowerCase()
+              .includes(searchParams.trim().toLowerCase());
+          });
+
+          moviesRender(filterResults, 12);
+
+          localStorage.setItem("filteredMovies", JSON.stringify(filterResults));
+        })
+        .catch((err) => console.log(err));
+    } else {
+      filterResults = JSON.parse(localStorage.getItem("movies")).filter(
+        (movie) => {
+          return movie.nameRU
+            .toLowerCase()
+            .includes(searchParams.trim().toLowerCase());
+        }
+      );
+
+      setFilteredMovies(filterResults);
+      if (filterResults.length === 0) {
+        console.log("nothing");
+      }
+
+      moviesRender(filterResults, 12);
+      localStorage.setItem("filteredMovies", JSON.stringify(filterResults));
+    }
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="App">
@@ -121,9 +178,17 @@ function App() {
           <Route exact path={"/"}>
             <Main loggedIn={loggedIn} />
           </Route>
-          <Route exact path={"/movies"}>
+          <ProtectedRoute
+            exact
+            path={"/movies"}
+            component={Movies}
+            loggedIn={loggedIn}
+            movies={resultMovies}
+            onSearch={handleMoviesSearch}
+            previousSearchWord={previousSearchWord}
+          >
             <Movies />
-          </Route>
+          </ProtectedRoute>
           <Route exact path={"/saved-movies"}>
             <SavedMovies />
           </Route>
@@ -133,13 +198,16 @@ function App() {
           <Route exact path={"/signin"}>
             <Login onLogin={handleLogin} />
           </Route>
-          <ProtectedRoute exact path={"/profile"}
-                  component={Profile}
-                  loggedIn={loggedIn}
-                  onUpdateProfile={handleUpdateProfile}
-                  profileUpdateMessage={profileUpdateMessage}
-                  profileErrorMessage={profileErrorMessage}
-                  isProfileUpdateSuccessful={isProfileUpdateSuccessful}>
+          <ProtectedRoute
+            exact
+            path={"/profile"}
+            component={Profile}
+            loggedIn={loggedIn}
+            onUpdateProfile={handleUpdateProfile}
+            profileUpdateMessage={profileUpdateMessage}
+            profileErrorMessage={profileErrorMessage}
+            isProfileUpdateSuccessful={isProfileUpdateSuccessful}
+          >
             <Profile />
           </ProtectedRoute>
           <Route path="*">
