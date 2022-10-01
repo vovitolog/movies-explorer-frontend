@@ -1,17 +1,17 @@
-.header {
+.header__wrapper {
   display: flex;
   justify-content: space-between;
   padding: 18px 70px;
 }
 
 @media screen and (max-width: 768px) {
-  .header {
+  .header__wrapper {
     padding: 18px 30px;
   }
 }
 
 @media screen and (max-width: 425px) {
-  .header {
+  .header__wrapper {
     padding: 18px 14px;
   }
 }

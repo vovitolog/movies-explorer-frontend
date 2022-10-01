@@ -14,6 +14,7 @@ export function Header(props) {
         </header>
       ) : (
         <header className="header">
+          <div className="header__wrapper">
           <Logo />
           <ul className="header__links">
             <li className="header__links-item">
@@ -27,6 +28,7 @@ export function Header(props) {
               </Link>
             </li>
           </ul>
+          </div>
         </header>
       )}
     </>
