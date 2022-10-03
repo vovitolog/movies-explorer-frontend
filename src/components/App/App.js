@@ -29,8 +29,28 @@ function App() {
 
   const [resultMovies, setResultMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
-
+  const [shortIsOn, setShortIsOn] = useState(false);
   const [previousSearchWord, setPreviousSearchWord] = useState("");
+  const [shortMoviesSearch, setShortMoviesSearch] = useState(false);
+
+  const shortMoviesSwitchClick = () => {
+    setShortMoviesSearch(!shortMoviesSearch);
+  };
+
+  useEffect(() => {
+    shortMoviesRenderer();
+  }, [shortMoviesSearch]);
+
+  const shortMoviesRenderer = () => {
+    if (shortMoviesSearch) {
+      setShortIsOn(true);
+      localStorage.setItem("shortIsOn", "true");
+      const shortMovies = filteredMovies.filter(
+        (movie) => movie.duration <= 40
+      );
+      moviesRender(shortMovies, 12);
+    }
+  };
 
   function handleRegister(signupData) {
     mainApi
@@ -94,7 +114,19 @@ function App() {
         .then((res) => {
           if (res) {
             setIsLoggedIn(true);
+            if (localStorage.searchWord) {
+              const previousSearchWord = JSON.parse(
+                localStorage.getItem("searchWord")
+              );
+              setPreviousSearchWord(previousSearchWord);
+              handleMoviesSearch(previousSearchWord);
+              if (localStorage.shortIsOn) {
+                setShortMoviesSearch(true);
+              }
+            }
           }
+
+          localStorage.removeItem("shortIsOn");
         })
         .catch((err) => console.log(err));
     }
@@ -186,6 +218,8 @@ function App() {
             movies={resultMovies}
             onSearch={handleMoviesSearch}
             previousSearchWord={previousSearchWord}
+            onToggleSwitchClick={shortMoviesSwitchClick}
+            isChecked={shortIsOn}
           >
             <Movies />
           </ProtectedRoute>

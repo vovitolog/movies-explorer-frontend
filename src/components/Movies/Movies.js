@@ -14,6 +14,8 @@ export function Movies(props) {
       <main className="movies">
         <SearchForm
           onSearch={props.onSearch}
+          onToggleSwitchClick={props.onToggleSwitchClick}
+          isChecked={props.isChecked}
           previousSearchWord={props.previousSearchWord}
         />
         <MoviesCardList movies={props.movies} savedMovies={props.savedMovies} />
