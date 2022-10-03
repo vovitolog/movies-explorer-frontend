@@ -33,6 +33,9 @@ function App() {
   const [previousSearchWord, setPreviousSearchWord] = useState("");
   const [shortMoviesSearch, setShortMoviesSearch] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [nothingFound, setNothingFound] = useState(false);
+
   const shortMoviesSwitchClick = () => {
     setShortMoviesSearch(!shortMoviesSearch);
   };
@@ -53,6 +56,7 @@ function App() {
   };
 
   function handleRegister(signupData) {
+    setIsLoading(true);
     mainApi
       .register(signupData)
       .then((res) => {
@@ -60,10 +64,12 @@ function App() {
           setCurrentUser(res);
           setIsRegistrationSuccessful(true);
           setUserMessage("Вы успешно зарегистрированы!");
+          setIsLoading(false);
           setTimeout(() => handleLogin(signupData), 1000);
         }
       })
       .catch((err) => {
+        setIsLoading(false);
         console.log(err);
       });
   }
@@ -72,6 +78,7 @@ function App() {
     if (!data.email || !data.password) {
       return;
     }
+    setIsLoading(true);
     mainApi
       .login(data)
       .then((res) => {
@@ -79,10 +86,12 @@ function App() {
         else {
           localStorage.setItem("jwt", res.token);
           setIsLoggedIn(true);
+          setIsLoading(false);
         }
       })
       .catch((err) => {
         setLoginErrorMessage("Не удалось войти, пожалуйста, проверьте данные");
+        setIsLoading(false);
         setLoginError(true);
         console.log(err);
       });
@@ -90,6 +99,7 @@ function App() {
 
   useEffect(() => {
     if (loggedIn) {
+      setIsLoading(true);
       Promise.all([
         mainApi.getUserProfile(localStorage.getItem("jwt")),
         mainApi.getMovies(),
@@ -99,6 +109,7 @@ function App() {
           const userMovies = movies.filter((movie) => movie.owner === user._id);
           localStorage.setItem("savedMovies", JSON.stringify(userMovies));
           history.push("/movies");
+          setTimeout(() => setIsLoading(false), 1000);
         })
         .catch((err) => console.log(err));
     } else {
@@ -135,18 +146,19 @@ function App() {
   function handleUpdateProfile(data) {
     setProfileUpdateMessage("");
     setProfileErrorMessage("");
-
+    setIsLoading(true);
     mainApi
       .updateProfile(data)
       .then((res) => {
         setIsProfileUpdateSuccessful(true);
         setCurrentUser(res);
         setProfileUpdateMessage("Данные успешно изменены");
+        setIsLoading(false);
         setTimeout(() => setProfileUpdateMessage(""), 3000);
       })
       .catch((err) => {
         setIsProfileUpdateSuccessful(false);
-
+        setIsLoading(false);
         setProfileErrorMessage("Что-то пошло не так...");
         setTimeout(() => setProfileErrorMessage(""), 3000);
         console.log(err);
@@ -164,8 +176,9 @@ function App() {
   };
 
   function handleMoviesSearch(searchParams) {
+    setNothingFound(false);
+    setIsLoading(true);
     localStorage.setItem("searchWord", JSON.stringify(searchParams));
-
     let filterResults;
     if (!localStorage.movies) {
       moviesApi
@@ -178,6 +191,22 @@ function App() {
               .toLowerCase()
               .includes(searchParams.trim().toLowerCase());
           });
+          setTimeout(() => setIsLoading(false), 500);
+
+          if (shortMoviesSearch) {
+            const shortMovies = filterResults.filter(
+              (movie) => movie.duration <= 40
+            );
+            setFilteredMovies(shortMovies);
+            if (shortMovies.length === 0) {
+              setNothingFound(true);
+            }
+          } else {
+            setFilteredMovies(filterResults);
+            if (filterResults.length === 0) {
+              setNothingFound(true);
+            }
+          }
 
           moviesRender(filterResults, 12);
 
@@ -192,12 +221,21 @@ function App() {
             .includes(searchParams.trim().toLowerCase());
         }
       );
-
-      setFilteredMovies(filterResults);
-      if (filterResults.length === 0) {
-        console.log("nothing");
+      setTimeout(() => setIsLoading(false), 500);
+      if (shortMoviesSearch) {
+        const shortMovies = filterResults.filter(
+          (movie) => movie.duration <= 40
+        );
+        setFilteredMovies(shortMovies);
+        if (shortMovies.length === 0) {
+          setNothingFound(true);
+        }
+      } else {
+        setFilteredMovies(filterResults);
+        if (filterResults.length === 0) {
+          setNothingFound(true);
+        }
       }
-
       moviesRender(filterResults, 12);
       localStorage.setItem("filteredMovies", JSON.stringify(filterResults));
     }
@@ -220,6 +258,8 @@ function App() {
             previousSearchWord={previousSearchWord}
             onToggleSwitchClick={shortMoviesSwitchClick}
             isChecked={shortIsOn}
+            isNothingFound={nothingFound}
+            isLoading={isLoading}
           >
             <Movies />
           </ProtectedRoute>

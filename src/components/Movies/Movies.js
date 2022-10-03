@@ -2,13 +2,13 @@ import { Footer } from "../Footer/Footer";
 import { SearchForm } from "../SearchForm/SearchForm";
 import { MoviesCardList } from "../MoviesCardList/MoviesCardList";
 import { Header } from "../Header/Header";
+import { Preloader } from "../Preloader/Preloader";
 import "./Movies.css";
 
 export function Movies(props) {
+  console.log(props.isLoading);
 
-  console.log(props.onSearch)
-
- return (
+  return (
     <>
       <Header loggedIn={props.loggedIn} />
       <main className="movies">
@@ -17,6 +17,10 @@ export function Movies(props) {
           onToggleSwitchClick={props.onToggleSwitchClick}
           isChecked={props.isChecked}
           previousSearchWord={props.previousSearchWord}
+        />
+        <Preloader
+          isLoading={props.isLoading}
+          isNothingFound={props.isNothingFound}
         />
         <MoviesCardList movies={props.movies} savedMovies={props.savedMovies} />
         <button

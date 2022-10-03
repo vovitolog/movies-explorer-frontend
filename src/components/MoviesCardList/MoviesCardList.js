@@ -3,7 +3,7 @@ import { MoviesCard } from "../MoviesCard/MoviesCard";
 
 export function MoviesCardList(props) {
   const movies = props.movies;
-  console.log(movies);
+  //console.log(movies);
 
   const calcDuration = (time) => {
     const hours = Math.floor(time / 60);
