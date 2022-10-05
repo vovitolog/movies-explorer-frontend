@@ -36,6 +36,74 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [nothingFound, setNothingFound] = useState(false);
 
+
+  const [moreResults, setMoreResults] = useState(false);
+
+    const [limit, setLimit] = useState(() => {
+      if (window.innerWidth <= 480) {
+        return 5;
+      } else if (window.innerWidth <= 768) {
+        return 8;
+      } else if (window.innerWidth > 768) {
+        return 12;
+      }
+    });
+
+    const [resultsToAdd, setResultsToAdd] = useState(() => {
+      if (window.innerWidth <= 768) {
+        return 2;
+      } else if (window.innerWidth > 768) {
+        return 4;
+      }
+    });
+
+    const [width, setWidth] = useState(window.innerWidth);
+    useEffect(() => {
+          window.addEventListener("resize", () =>
+        setTimeout(() => {
+          screenSetter();
+        }, 1000)
+      );
+    }, []);
+    const screenSetter = () => {
+      setWidth(window.innerWidth);
+    };
+
+
+    useEffect(() => {
+      setLimit(windowSizeHandler);
+    }, [width]);
+    useEffect(() => {
+      moviesRender(filteredMovies, limit);
+    }, [limit]);
+
+    const windowSizeHandler = () => {
+      if (window.innerWidth <= 480) {
+        setLimit(5);
+        setResultsToAdd(2);
+      } else if (window.innerWidth <= 800) {
+        setLimit(8);
+        setResultsToAdd(2);
+      } else if (window.innerWidth > 800) {
+        setLimit(12);
+        setResultsToAdd(4);
+      }
+    };
+
+     const showMore = () => {
+      let newLimit;
+      if (limit + resultsToAdd < filteredMovies.length) {
+        newLimit = limit + resultsToAdd;
+        moviesRender(filteredMovies.slice(0, newLimit));
+        setLimit(newLimit);
+        setMoreResults(true);
+      } else if (limit + resultsToAdd >= filteredMovies.length) {
+        newLimit = filteredMovies.length;
+        moviesRender(filteredMovies, newLimit);
+        setMoreResults(false);
+      }
+    };
+
   const shortMoviesSwitchClick = () => {
     setShortMoviesSearch(!shortMoviesSearch);
   };
@@ -51,7 +119,7 @@ function App() {
       const shortMovies = filteredMovies.filter(
         (movie) => movie.duration <= 40
       );
-      moviesRender(shortMovies, 12);
+      moviesRender(shortMovies, limit);
     }
   };
 
@@ -168,7 +236,7 @@ function App() {
   const moviesRender = (movies, itemsToShow) => {
     if (movies) {
       if (movies.length > itemsToShow) {
-        setResultMovies(movies.slice(0, 12));
+        setResultMovies(movies.slice(0, limit));
       } else {
         setResultMovies(movies);
       }
@@ -208,7 +276,7 @@ function App() {
             }
           }
 
-          moviesRender(filterResults, 12);
+          moviesRender(filterResults, limit);
 
           localStorage.setItem("filteredMovies", JSON.stringify(filterResults));
         })
@@ -236,7 +304,7 @@ function App() {
           setNothingFound(true);
         }
       }
-      moviesRender(filterResults, 12);
+      moviesRender(filterResults, limit);
       localStorage.setItem("filteredMovies", JSON.stringify(filterResults));
     }
   }
@@ -260,6 +328,8 @@ function App() {
             isChecked={shortIsOn}
             isNothingFound={nothingFound}
             isLoading={isLoading}
+            moreResults={moreResults}
+            showMoreResults={showMore}
           >
             <Movies />
           </ProtectedRoute>
