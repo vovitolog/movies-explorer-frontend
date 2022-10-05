@@ -3,7 +3,6 @@ import { MoviesCard } from "../MoviesCard/MoviesCard";
 
 export function MoviesCardList(props) {
   const movies = props.movies;
-  //console.log(movies);
 
   const calcDuration = (time) => {
     const hours = Math.floor(time / 60);
@@ -22,6 +21,11 @@ export function MoviesCardList(props) {
               nameRU={movie.nameRU}
               duration={calcDuration(movie.duration)}
               image={`https://api.nomoreparties.co/${movie.image.url}`}
+              button={props.button}
+              trailer={movie.trailerLink}
+              onLike={props.onLike}
+              onUnlike={props.onUnlike}
+              savedMovies={props.savedMovies}
             />
           );
         })}

@@ -6,8 +6,6 @@ import { Preloader } from "../Preloader/Preloader";
 import "./Movies.css";
 
 export function Movies(props) {
-  console.log(props.moreResults);
-
   return (
     <>
       <Header loggedIn={props.loggedIn} />
@@ -18,11 +16,17 @@ export function Movies(props) {
           isChecked={props.isChecked}
           previousSearchWord={props.previousSearchWord}
         />
-     {/*    <Preloader
+        {/*    <Preloader
           isLoading={props.isLoading}
           isNothingFound={props.isNothingFound}
         /> */}
-        <MoviesCardList movies={props.movies} savedMovies={props.savedMovies} />
+        <MoviesCardList
+          movies={props.movies}
+          savedMovies={props.savedMovies}
+          button="movie-card__favorite-button"
+          onLike={props.onLike}
+          onUnlike={props.onUnlike}
+        />
         <button
           type="button"
           className={`movies__button ${
