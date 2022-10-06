@@ -34,6 +34,8 @@ function App() {
   const [shortIsOn, setShortIsOn] = useState(false);
   const [previousSearchWord, setPreviousSearchWord] = useState("");
   const [shortMoviesSearch, setShortMoviesSearch] = useState(false);
+  const [savedShortMoviesSearch, setSavedShortMoviesSearch] = useState(false);
+  const [savedMoviesShortIsOn, setSavedMoviesShortIsOn] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
   const [nothingFound, setNothingFound] = useState(false);
@@ -107,6 +109,14 @@ function App() {
   const shortMoviesSwitchClick = () => {
     setShortMoviesSearch(!shortMoviesSearch);
   };
+
+  const shortSavedMoviesSwitchClick = () => {
+    setSavedShortMoviesSearch(!savedShortMoviesSearch);
+  };
+
+  useEffect(() => {
+    shortSavedMoviesRenderer();
+  }, [savedShortMoviesSearch]);
 
   useEffect(() => {
     shortMoviesRenderer();
@@ -308,7 +318,7 @@ function App() {
     }
   }
 
-  //Отрисовка фильмов с условиием короткометражек
+  // Отрисовка фильмов с условиием короткометражек
 
   const shortMoviesRenderer = () => {
     setNothingFound(false);
@@ -331,8 +341,47 @@ function App() {
     }
   };
 
-   // Логика лайка
-   const saveMovie = (cardMovie) => {
+  //Отрисовка сохраненных фильмов с фильтром короткометражек
+
+  const shortSavedMoviesRenderer = () => {
+    setNothingFound(false);
+    if (savedShortMoviesSearch) {
+      setSavedMoviesShortIsOn(true);
+      const savedShortMovies = likedMovies.filter(
+        (movie) => movie.duration <= 40
+      );
+      setLikedMovies(savedShortMovies);
+      if (savedShortMovies.length === 0) {
+        setNothingFound(true);
+      }
+    } else {
+      const savedMovies = JSON.parse(localStorage.getItem("savedMovies"));
+      setLikedMovies(savedMovies);
+      setSavedMoviesShortIsOn(false);
+    }
+  };
+
+  //Функция поиска для сохраненных фильмов
+
+  const handleSavedMoviesSearch = (searchParams) => {
+    setNothingFound(false);
+    setIsLoading(true);
+    const filterResults = JSON.parse(
+      localStorage.getItem("savedMovies")
+    ).filter((movie) => {
+      return movie.nameRU
+        .toLowerCase()
+        .includes(searchParams.trim().toLowerCase());
+    });
+    setLikedMovies(filterResults);
+    if (filterResults.length === 0) {
+      setNothingFound(true);
+    }
+    setTimeout(() => setIsLoading(false), 500);
+  };
+
+  // Логика лайка
+  const saveMovie = (cardMovie) => {
     mainApi
       .createMovie(cardMovie)
       .then((savedCard) => {
@@ -403,9 +452,23 @@ function App() {
           >
             <Movies />
           </ProtectedRoute>
-          <Route exact path={"/saved-movies"}>
-            <SavedMovies />
-          </Route>
+          <ProtectedRoute
+            exact
+            path={"/saved-movies"}
+            movies={likedMovies}
+            onSearch={handleSavedMoviesSearch}
+            onUnlike={removeMovie}
+            component={SavedMovies}
+            isLoading={isLoading}
+            loggedIn={loggedIn}
+            isNothingFound={nothingFound}
+            savedMovies={likedMovies}
+            shortMoviesOn={shortMoviesSearch}
+            onToggleSwitchClick={shortSavedMoviesSwitchClick}
+            savedIsChecked={savedMoviesShortIsOn}
+          />
+          <ProtectedRoute />
+
           <Route exact path={"/signup"}>
             <Register onRegister={handleRegister} />
           </Route>
