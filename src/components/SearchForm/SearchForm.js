@@ -1,14 +1,16 @@
 import "./SearchForm.css";
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export function SearchForm(props) {
 
+  const location = useLocation();
   const [searchWord, setSearchWord] = useState(props.previousSearchWord);
 
   function handleSearch(event) {
     event.preventDefault();
-
-    (props.onSearch(searchWord))
+    location.pathname === '/movies' ?
+    (props.onSearch(searchWord)) : (props.onSavedMoviesSearch(searchWord));
   }
 
   return (
@@ -35,6 +37,8 @@ export function SearchForm(props) {
             <input
               name="shortMovies"
               id="shortMovies"
+              onChange={props.onToggleSwitchClick}
+              checked={location.pathname === '/movies' ? (props.isChecked ? true : false) : (props.savedIsChecked ? true : false)}
               className="search-form__switch-checkbox"
               type="checkbox"
             />

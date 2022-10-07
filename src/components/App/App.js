@@ -158,11 +158,11 @@ function App() {
           setIsLoading(false);
         }
       })
-      .catch((err) => {
+      .catch((error) => {
         setLoginErrorMessage("Не удалось войти, пожалуйста, проверьте данные");
         setIsLoading(false);
         setLoginError(true);
-        console.log(err);
+        console.log(error);
       });
   }
 
@@ -449,9 +449,8 @@ function App() {
             showMoreResults={showMore}
             onLike={saveMovie}
             onUnlike={removeMovie}
-          >
-            <Movies />
-          </ProtectedRoute>
+            savedMovies={likedMovies}
+          />
           <ProtectedRoute
             exact
             path={"/saved-movies"}
@@ -467,14 +466,6 @@ function App() {
             onToggleSwitchClick={shortSavedMoviesSwitchClick}
             savedIsChecked={savedMoviesShortIsOn}
           />
-          <ProtectedRoute />
-
-          <Route exact path={"/signup"}>
-            <Register onRegister={handleRegister} />
-          </Route>
-          <Route exact path={"/signin"}>
-            <Login onLogin={handleLogin} />
-          </Route>
           <ProtectedRoute
             exact
             path={"/profile"}
@@ -484,9 +475,24 @@ function App() {
             profileUpdateMessage={profileUpdateMessage}
             profileErrorMessage={profileErrorMessage}
             isProfileUpdateSuccessful={isProfileUpdateSuccessful}
-          >
-            <Profile />
-          </ProtectedRoute>
+            isLoading={isLoading}
+          />
+          <Route exact path={"/signup"}>
+            <Register
+              onRegister={handleRegister}
+              userMessage={userMessage}
+              isRegistrationSuccessful={isRegistrationSuccessful}
+              isLoading={isLoading}
+            />
+          </Route>
+          <Route exact path={"/signin"}>
+            <Login
+              onLogin={handleLogin}
+              loginError={loginError}
+              loginErrorMessage={loginErrorMessage}
+              isLoading={isLoading}
+            />
+          </Route>
           <Route path="*">
             <NotFound />
           </Route>
