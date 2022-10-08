@@ -23,6 +23,7 @@ function App() {
   const location = useLocation();
   const [loginError, setLoginError] = useState(false);
   const [loginErrorMessage, setLoginErrorMessage] = useState("");
+  const [registrationError, setRegistrationError] = useState("");
   const [profileUpdateMessage, setProfileUpdateMessage] = useState("");
   const [profileErrorMessage, setProfileErrorMessage] = useState("");
   const [isProfileUpdateSuccessful, setIsProfileUpdateSuccessful] =
@@ -122,6 +123,8 @@ function App() {
     shortMoviesRenderer();
   }, [shortMoviesSearch]);
 
+  // Регистрация
+
   function handleRegister(signupData) {
     setIsLoading(true);
     mainApi
@@ -137,6 +140,7 @@ function App() {
       })
       .catch((err) => {
         setIsLoading(false);
+        setRegistrationError("Что-то пошло не так...");
         console.log(err);
       });
   }
@@ -249,6 +253,22 @@ function App() {
       }
     }
   };
+
+  //Логаут
+
+  function handleLogout() {
+    localStorage.clear();
+    setCurrentUser({});
+    setIsLoggedIn(false);
+    setFilteredMovies([]);
+    setResultMovies([]);
+    setRegistrationError("");
+    setLoginErrorMessage("");
+    setPreviousSearchWord("");
+    setShortIsOn(false);
+    setMoreResults(false);
+    history.push("/");
+  }
 
   //Поиск и фильтр фильмов
 
@@ -476,6 +496,7 @@ function App() {
             profileErrorMessage={profileErrorMessage}
             isProfileUpdateSuccessful={isProfileUpdateSuccessful}
             isLoading={isLoading}
+            handleLogout={handleLogout}
           />
           <Route exact path={"/signup"}>
             <Register
