@@ -7,31 +7,31 @@ import "./Profile.css";
 export function Profile(props) {
   const currentUser = useContext(CurrentUserContext);
 
-     const [dataIsChanged, setDataIsChanged] = useState(false);
+  const [dataIsChanged, setDataIsChanged] = useState(false);
 
-    const nameRef = useRef("");
-    const emailRef = useRef("");
-    const { values, isValid, handleChange, errors } = useFormWithValidation({
-      userName: nameRef.current.value,
-      userEmail: emailRef.currentValue,
-    });
+  const nameRef = useRef("");
+  const emailRef = useRef("");
+  const { values, isValid, handleChange, errors } = useFormWithValidation({
+    userName: nameRef.current.value,
+    userEmail: emailRef.currentValue,
+  });
 
-     useEffect(() => {
-      nameRef.current.value === currentUser.name &&
-      emailRef.current.value === currentUser.email
-        ? setDataIsChanged(false)
-        : setDataIsChanged(true);
-    }, [values.userName, values.userEmail, currentUser.email, currentUser.name]);
+  useEffect(() => {
+    nameRef.current.value === currentUser.name &&
+    emailRef.current.value === currentUser.email
+      ? setDataIsChanged(false)
+      : setDataIsChanged(true);
+  }, [values.userName, values.userEmail, currentUser.email, currentUser.name]);
 
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      if (isValid) {
-        props.onUpdateProfile({
-          name: nameRef.current.value,
-          email: emailRef.current.value,
-        });
-      }
-    };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (isValid) {
+      props.onUpdateProfile({
+        name: nameRef.current.value,
+        email: emailRef.current.value,
+      });
+    }
+  };
 
   return (
     <>
@@ -52,10 +52,17 @@ export function Profile(props) {
                 type="text"
                 required
                 defaultValue={currentUser.name}
-                  onChange={(event) => handleChange(event)}
-                  ref={nameRef}
+                onChange={(event) => handleChange(event)}
+                ref={nameRef}
+                readOnly={props.isLoading}
               />
             </label>
+            <span
+              className={`profile__info-message
+             ${!isValid ? `profile__info-message_active` : null}`}
+            >
+              {errors?.userName}
+            </span>
             <label className="profile__input-label">
               Почта
               <input
@@ -70,12 +77,32 @@ export function Profile(props) {
                 onChange={(event) => handleChange(event)}
                 defaultValue={currentUser.email}
                 ref={emailRef}
+                readOnly={props.isLoading}
               />
             </label>
+            <span
+              className={`profile__info-message
+             ${!isValid ? `profile__info-message_active` : null}`}
+            >
+              {errors?.userEmail}
+            </span>
+            <span
+              className={`profile__info-message
+             ${
+               props.isProfileUpdateSuccessful
+                 ? `profile__info-message_active-success`
+                 : `profile__info-message_active`
+             }`}
+            >
+              {props.isProfileUpdateSuccessful
+                ? `${props.profileUpdateMessage}`
+                : `${props.profileErrorMessage}`}
+            </span>
           </div>
           <button
             className="profile__button-submit transition-button"
             type="submit"
+            disabled={!isValid || !dataIsChanged}
           >
             Редактировать
           </button>
@@ -83,6 +110,7 @@ export function Profile(props) {
         <button
           type="button"
           className="profile__button-logout transition-button"
+          onClick={props.handleLogout}
         >
           Выйти из аккаунта
         </button>
