@@ -503,6 +503,7 @@ function App() {
               onRegister={handleRegister}
               userMessage={userMessage}
               isRegistrationSuccessful={isRegistrationSuccessful}
+              registrationError={registrationError}
               isLoading={isLoading}
             />
           </Route>

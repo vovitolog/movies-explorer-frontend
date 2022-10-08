@@ -4,7 +4,6 @@ import { useFormWithValidation } from "../Validation/Validation";
 import "./Login.css";
 
 export function Login(props) {
-
   const { values, isValid, handleChange, errors } = useFormWithValidation({
     userEmail: "",
     userPassword: "",
@@ -37,7 +36,14 @@ export function Login(props) {
           required
           value={values.email}
           onChange={(event) => handleChange(event)}
+          readOnly={props.isLoading}
         ></input>
+        <span
+          className={`login__info-message
+             ${!isValid ? `login__info-message_active` : null}`}
+        >
+          {errors?.userEmail}
+        </span>
         <label className="login__label">Пароль</label>
         <input
           className="login__input"
@@ -49,8 +55,25 @@ export function Login(props) {
           required
           value={values.password}
           onChange={(event) => handleChange(event)}
+          readOnly={props.isLoading}
         ></input>
-        <button className="login__button transition-button" type="submit">
+        <span
+          className={`login__info-message
+             ${!isValid ? `login__info-message_active` : null}`}
+        >
+          {errors?.userPassword}
+        </span>
+        <span
+          className={`login__info-message
+             ${props.loginError ? `login__info-message_active` : null}`}
+        >
+          {props.loginErrorMessage}
+        </span>
+        <button
+          className="login__button transition-button"
+          type="submit"
+          disabled={!isValid}
+        >
           Войти
         </button>
         <div className="login__redirect">
