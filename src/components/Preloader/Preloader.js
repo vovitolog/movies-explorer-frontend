@@ -2,6 +2,7 @@ import React from 'react'
 import './Preloader.css'
 
 export function Preloader(props) {
+
     return (
       <>
          <span className={`preloader__nothingfound-message

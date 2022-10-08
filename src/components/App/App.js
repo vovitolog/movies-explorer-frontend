@@ -15,15 +15,17 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
-  const [isRegistrationSuccessful, setIsRegistrationSuccessful] =
-    useState(false);
-  const [userMessage, setUserMessage] = useState("");
   const [loggedIn, setIsLoggedIn] = useState(false);
   const history = useHistory();
   const location = useLocation();
+
+  const [isRegistrationSuccessful, setIsRegistrationSuccessful] =
+    useState(false);
+  const [userMessage, setUserMessage] = useState("");
   const [loginError, setLoginError] = useState(false);
   const [loginErrorMessage, setLoginErrorMessage] = useState("");
   const [registrationError, setRegistrationError] = useState("");
+
   const [profileUpdateMessage, setProfileUpdateMessage] = useState("");
   const [profileErrorMessage, setProfileErrorMessage] = useState("");
   const [isProfileUpdateSuccessful, setIsProfileUpdateSuccessful] =
@@ -32,6 +34,7 @@ function App() {
   const [resultMovies, setResultMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [likedMovies, setLikedMovies] = useState([]);
+
   const [shortIsOn, setShortIsOn] = useState(false);
   const [previousSearchWord, setPreviousSearchWord] = useState("");
   const [shortMoviesSearch, setShortMoviesSearch] = useState(false);
@@ -40,8 +43,8 @@ function App() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [nothingFound, setNothingFound] = useState(false);
-
   const [moreResults, setMoreResults] = useState(false);
+  const [width, setWidth] = useState(window.innerWidth);
 
   const [limit, setLimit] = useState(() => {
     if (window.innerWidth <= 480) {
@@ -61,24 +64,9 @@ function App() {
     }
   });
 
-  const [width, setWidth] = useState(window.innerWidth);
-  useEffect(() => {
-    window.addEventListener("resize", () =>
-      setTimeout(() => {
-        screenSetter();
-      }, 1000)
-    );
-  }, []);
   const screenSetter = () => {
     setWidth(window.innerWidth);
   };
-
-  useEffect(() => {
-    setLimit(windowSizeHandler);
-  }, [width]);
-  useEffect(() => {
-    moviesRender(filteredMovies, limit);
-  }, [limit]);
 
   const windowSizeHandler = () => {
     if (window.innerWidth <= 480) {
@@ -114,6 +102,22 @@ function App() {
   const shortSavedMoviesSwitchClick = () => {
     setSavedShortMoviesSearch(!savedShortMoviesSearch);
   };
+
+  useEffect(() => {
+    window.addEventListener("resize", () =>
+      setTimeout(() => {
+        screenSetter();
+      }, 1000)
+    );
+  }, []);
+
+  useEffect(() => {
+    setLimit(windowSizeHandler);
+  }, [width]);
+
+  useEffect(() => {
+    moviesRender(filteredMovies, limit);
+  }, [limit]);
 
   useEffect(() => {
     shortSavedMoviesRenderer();
@@ -183,6 +187,7 @@ function App() {
           setCurrentUser(user);
           const userMovies = movies.filter((movie) => movie.owner === user._id);
           localStorage.setItem("savedMovies", JSON.stringify(userMovies));
+          setLikedMovies(userMovies);
           history.push("/movies");
           setTimeout(() => setIsLoading(false), 1000);
         })
@@ -243,9 +248,12 @@ function App() {
       });
   }
 
+  // Проверка длины массива для отрисовки карточек
+
   const moviesRender = (movies, itemsToShow) => {
     if (movies) {
       if (movies.length > itemsToShow) {
+        setMoreResults(true);
         setResultMovies(movies.slice(0, limit));
       } else {
         setResultMovies(movies);
@@ -270,7 +278,7 @@ function App() {
     history.push("/");
   }
 
-  //Поиск и фильтр фильмов
+  // Поиск и фильтр фильмов
 
   function handleMoviesSearch(searchParams) {
     setNothingFound(false);

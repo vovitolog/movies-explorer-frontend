@@ -6,6 +6,7 @@ import { Preloader } from "../Preloader/Preloader";
 import "./Movies.css";
 
 export function Movies(props) {
+
   return (
     <>
       <Header loggedIn={props.loggedIn} />
@@ -16,7 +17,7 @@ export function Movies(props) {
           isChecked={props.isChecked}
           previousSearchWord={props.previousSearchWord}
         />
-           <Preloader
+        <Preloader
           isLoading={props.isLoading}
           isNothingFound={props.isNothingFound}
         />
