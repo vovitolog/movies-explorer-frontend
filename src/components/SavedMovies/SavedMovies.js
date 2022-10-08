@@ -17,10 +17,10 @@ export function SavedMovies(props) {
           shortMoviesOn={props.shortMoviesOn}
           savedIsChecked={props.savedIsChecked}
         />
-      {/*   <Preloader
+        <Preloader
           isLoading={props.isLoading}
           isNothingFound={props.isNothingFound}
-        /> */}
+        />
         <MoviesCardList
           movies={props.movies}
           button="movie-card__favorite-button"

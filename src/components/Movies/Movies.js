@@ -16,10 +16,10 @@ export function Movies(props) {
           isChecked={props.isChecked}
           previousSearchWord={props.previousSearchWord}
         />
-        {/*    <Preloader
+           <Preloader
           isLoading={props.isLoading}
           isNothingFound={props.isNothingFound}
-        /> */}
+        />
         <MoviesCardList
           movies={props.movies}
           savedMovies={props.savedMovies}
