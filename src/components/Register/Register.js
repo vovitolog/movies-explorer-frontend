@@ -4,7 +4,6 @@ import { useFormWithValidation } from "../Validation/Validation";
 import "./Register.css";
 
 export function Register(props) {
-
   const { values, isValid, handleChange, errors } = useFormWithValidation({
     userName: "",
     userEmail: "",
@@ -39,7 +38,14 @@ export function Register(props) {
           required
           value={values.name}
           onChange={(event) => handleChange(event)}
+          readOnly={props.isLoading}
         ></input>
+        <span
+          className={`register__info-message
+             ${!isValid ? `register__info-message_active` : null}`}
+        >
+          {errors?.userName}
+        </span>
         <label className="register__label">E-mail</label>
         <input
           className="register__input"
@@ -52,7 +58,14 @@ export function Register(props) {
           required
           value={values.email}
           onChange={(event) => handleChange(event)}
+          readOnly={props.isLoading}
         ></input>
+        <span
+          className={`register__info-message
+             ${!isValid ? `register__info-message_active` : null}`}
+        >
+          {errors?.userEmail}
+        </span>
         <label className="register__label">Пароль</label>
         <input
           className="register__input"
@@ -64,9 +77,31 @@ export function Register(props) {
           required
           value={values.password}
           onChange={(event) => handleChange(event)}
+          readOnly={props.isLoading}
         ></input>
-        <span className="register__input-error">Что-то пошло не так...</span>
-        <button className="register__button transition-button" type="submit">
+        <span
+          className={`register__info-message
+             ${!isValid ? `register__info-message_active` : null}`}
+        >
+          {errors?.userPassword}
+        </span>
+        <span
+          className={`register__info-message
+             ${
+               props.isRegistrationSuccessful
+                 ? `register__info-message_active-success`
+                 : `register__info-message_active`
+             }`}
+        >
+          {props.isRegistrationSuccessful
+            ? `${props.userMessage}`
+            : `${props.registrationError}`}
+        </span>
+        <button
+          className="register__button transition-button"
+          type="submit"
+          disabled={!isValid}
+        >
           Зарегистрироваться
         </button>
         <div className="register__redirect">

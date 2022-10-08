@@ -69,18 +69,23 @@
   border-bottom: 1px solid #000;
 }
 
-.register__input-error {
+.register__info-message {
   display: block;
   margin-top: 6px;
   font-weight: 400;
   font-size: 10px;
   line-height: 12px;
   color: #ff4062;
-  visibility: hidden;
+  display: none;
 }
 
-.register__input-error_active {
-  visibility: visible;
+.register__info-message_active {
+  display: block;
+}
+
+.register__info-message_active-success {
+  display: block;
+  color: #2BE080;
 }
 
 .register__button {
