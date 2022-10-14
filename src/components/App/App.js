@@ -77,7 +77,7 @@ function App() {
       setResultsToAdd(2);
     } else if (window.innerWidth > 800) {
       setLimit(12);
-      setResultsToAdd(4);
+      setResultsToAdd(3);
     }
   };
 

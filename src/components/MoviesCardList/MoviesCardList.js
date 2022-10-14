@@ -12,6 +12,9 @@ export function MoviesCardList(props) {
     return hours > 0 ? `${hours}ч ${minutes}м` : `${minutes}м`;
   };
 
+  const regex = /^(https?:\/\/)(w{3})?([\da-z\.\-]+)\.([a-z\.]{2,6})([\w\.\-\_~:\/?#\[\]@!$&\'()*\+,;=])*#?\/?$/;
+  const isUrlValid = regex.test(props.movie.trailerLink);
+
   return (
     <section className="movies-list">
       <ul className="movies-list__cards">
@@ -26,6 +29,7 @@ export function MoviesCardList(props) {
                   duration={calcDuration(movie.duration)}
                   button={props.button}
                   trailer={movie.trailerLink}
+                  /* trailer={isUrlValid ? movie.trailerLink : "https://youtube.com"} */
                   onLike={props.onLike}
                   onUnlike={props.onUnlike}
                   savedMovies={props.savedMovies}
